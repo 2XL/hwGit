@@ -128,4 +128,138 @@ git add conflict_file
 git commit -m "fix conflict"
 # end merge
 
+######################################
+# history decorator
+#
+git log
+#commit a47db77fad44e3252f367210b86a3b687e0a25c9
+#Author: chenglong.zq <chenglong.zq@gmail.com>
+#Date:   Fri Nov 18 02:08:20 2016 +0100
+#
+#    README.md code instead of raw
+#
+#commit 5fb84eb263f6caceba521af77827d4d847bbdd3c
+#:...skipping...
+#commit a47db77fad44e3252f367210b86a3b687e0a25c9
+#Author: chenglong.zq <chenglong.zq@gmail.com>
+#Date:   Fri Nov 18 02:08:20 2016 +0100
+#
+#    README.md code instead of raw
+#commit 5fb84eb263f6caceba521af77827d4d847bbdd3c
+#Author: chenglong.zq <chenglong.zq@gmail.com>
+#Date:   Fri Nov 18 02:06:12 2016 +0100
+#
+#    Git toolbox
+#
+#commit f100a4a6116d076d7c5b9984b4099bda0ae1ef74
+#Author: chenglong.zq <chenglong.zq@gmail.com>
+#Date:   Fri Nov 18 01:15:52 2016 +0100
+#
+#    Initial Commit
+
+git log --graph
+#x@x:hwGit$ git log --graph --decorate --oneline
+#* a47db77 (HEAD -> master) README.md code instead of raw
+#* 5fb84eb (origin/master) Git toolbox
+#* f100a4a Initial Commit
+
+git show [commit_id|branch_name|HEAD|HEAD^]
+#x@x ~/CodeLab/Bash/hwGit $ git show a47db77
+#commit a47db77fad44e3252f367210b86a3b687e0a25c9
+#Author: chenglong.zq <chenglong.zq@gmail.com>
+#Date:   Fri Nov 18 02:08:20 2016 +0100
+#
+#    README.md code instead of raw
+#
+#diff --git a/README.md b/README.md
+#index 9c5c213..6c5380a 100644
+#--- a/README.md
+#+++ b/README.md
+#@@ -4,8 +4,9 @@ GIT
+#
+# * get started:
+#
+#+```bash
+# sudo apt-get install git
+# man git || git help
+#-
+#+```
+#
+#
+#x@x ~/CodeLab/Bash/hwGit $
+
+HEAD        root
+HEAD^       root parent
+HEAD^^      root grant parent
+HEAD~3      root grant grant parent # goto head and move back 3 positions
+HEAD~4^2    # if we have a merge move from left to right ordered by id name
+HEAD@{"1 month ago"} # where was head one month ago
+
+###########################
+# track history of one file
+
+# know who edited each line of a file
+git blame file_name
+# git blame README.md
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  1) GIT
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  2) ===
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  3)
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  4)
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  5) * get started:
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  6)
+#a47db77f (chenglong.zq 2016-11-18 02:08:20 +0100  7) ```bash
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  8) sudo apt-get install git
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100  9) man git || git help
+#a47db77f (chenglong.zq 2016-11-18 02:08:20 +0100 10) ```
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100 11)
+#^f100a4a (chenglong.zq 2016-11-18 01:15:52 +0100 12)
+
+# show all the modifications between two 'commits' or 'branches' [x] [y]
+git diff HEAD HEAD~1
+#x@x ~/CodeLab/Bash/hwGit $ git diff HEAD HEAD~1
+#diff --git a/README.md b/README.md
+#index 6c5380a..9c5c213 100644
+#--- a/README.md
+#+++ b/README.md
+#@@ -4,9 +4,8 @@ GIT
+#
+# * get started:
+#
+#-```bash
+# sudo apt-get install git
+# man git || git help
+#-```
+#+
+#
+#
+#x@x ~/CodeLab/Bash/hwGit $
+
+# show editions per each commit
+git log --patch
+
+# show 'commits' which contains certain string
+git log --grep [keyword] --oneline
+#x@x ~/CodeLab/Bash/hwGit $ git log --grep Git --oneline
+#5fb84eb Git toolbox
+
+# show 'commit' which contains matching keywords in edition
+git log -G[keyword] --patch
+
+# get help for subcommand
+git help grep
+
+# show latest # commits
+git log -3 --oneline
+#x@x ~/CodeLab/Bash/hwGit $ git log -3 --oneline
+#a47db77 README.md code instead of raw
+#5fb84eb Git toolbox
+#f100a4a Initial Commit
+#x@x ~/CodeLab/Bash/hwGit $
+
+# show commits between [index_index]
+git log HEAD~5..HEAD^ --oneline # oldest..recent
+
+# show commits between [branches..branch]
+git log branch_a..branch_b --oneline
+
 
