@@ -316,5 +316,17 @@ git log --graph --decorate --oneline
 # a new line appears a the current state
 
 
+###################################
+# merge a branch with only one commit
+
+# option 1
+git cherry-pick # its like a rebase
+# option 2
+git branch temporal_branch  # create a new branch
+# merge the temporal branch with the parent branch and the target branch
+git ...
+
+
+
 
 
