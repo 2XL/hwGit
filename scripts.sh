@@ -263,3 +263,58 @@ git log HEAD~5..HEAD^ --oneline # oldest..recent
 git log branch_a..branch_b --oneline
 
 
+##############################
+# changing history -- amend  (current HEAD..index only)
+#
+# i have submitted a commit  but i want to add another file to the latest commit
+# we edit a file and then we run:
+git commit --amend
+# the latest commit will be refreshed with the changes of last edited file
+# it generates a new id and the previous id got deprecated.
+
+
+
+##################################
+# alter old history [none shared yet]--
+#
+# lookup for index to alter
+git blame [file_name]
+git log --graph --oneline --decorate
+
+git rebase -i [commit-id] # interactive
+# pick      => use commit
+# reword    => use commit but edit message
+# edit      => use commit but stop for amending
+# squash    => use commit but meld into previous commit
+# fixup     => like squash but discard this commit's log message
+# exec      => run command using shell
+# drop      => remove commit
+
+# default it will be pick and everything will continue the same
+
+# squash # we will need to select one of both
+# reward # if conflict need to solve it and run;
+git rebase --continue
+
+###################################
+# recovering from altering history
+#
+# git command history
+git reflog
+# show details of command register HEAD -2
+git show HEAD@{2}
+# git command history of certain branch
+git reflog refs/heads/master
+
+###################################
+# revert commits
+git log --graph --decorate --oneline
+git show [commit_id]
+# git generates changes that are exactly the opposite commid_id
+git revert [commit_id]
+git log --graph --decorate --oneline
+# a new line appears a the current state
+
+
+
+
